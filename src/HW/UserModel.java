@@ -6,31 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserModel {
-    private User user = new User("Apache", "FreeMarker");
-    private LocalDateTime currentDateTime = LocalDateTime.now();
     private List<User> customers = new ArrayList<>();
 
     public UserModel() {
-        customers.add(new User("Marco"));
-        customers.add(new User("Winston", "Duarte"));
-        customers.add(new User("Amos", "Burton", "'Timmy'"));
-        customers.get(1).setEmailConfirmed(true);
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public LocalDateTime getCurrentDateTime() {
-        return currentDateTime;
-    }
-
-    public void setCurrentDateTime(LocalDateTime currentDateTime) {
-        this.currentDateTime = currentDateTime;
+        customers.add(new User(1,"Marco"));
+        customers.add(new User(2,"Winston"));
+        customers.add(new User(3,"Amos"));
     }
 
     public List<User> getCustomers() {
@@ -42,66 +23,30 @@ public class UserModel {
     }
 
     public static class User {
-        private String firstName;
-        private String lastName;
-        private String middleName = null;
-        private boolean emailConfirmed = false;
-        private String email;
+        private int id;
+        private String name;
 
-        public User(String firstName) {
-            this(firstName, null, null);
+        public User(int id, String name) {
+            this.id = id;
+            this.name = name;
         }
 
-        public User(String firstName, String lastName) {
-            this(firstName, lastName, null);
+        public int getId() {
+            return id;
         }
 
-        public User(String firstName, String lastName, String middleName) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.middleName = middleName;
-            this.email = firstName+"@test.mail";
+        public void setId(int id) {
+            this.id = id;
         }
 
-        public String getFirstName() {
-            return firstName;
+        public String getName() {
+            return name;
         }
 
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
-        }
-
-        public String getLastName() {
-            return lastName;
-        }
-
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
-        }
-
-        public String getMiddleName() {
-            return middleName;
-        }
-
-        public void setMiddleName(String middleName) {
-            this.middleName = middleName;
-        }
-
-        public boolean isEmailConfirmed() {
-            return emailConfirmed;
-        }
-
-        public void setEmailConfirmed(boolean emailConfirmed) {
-            this.emailConfirmed = emailConfirmed;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
+        public void setName(String name) {
+            this.name = name;
         }
     }
+
 }
 

@@ -43,7 +43,12 @@ public class HwServer extends Server {
     }
 
     private void freemarkerSampleHandler(HttpExchange exchange, String path) {
-        renderTemplate(exchange, path, getUserModel());
+        if (path.equals("users.html")){
+            renderTemplate(exchange, path, getUserModel());
+        }else {
+            renderTemplate(exchange, path, new BookModel());
+        }
+
     }
 
     protected void renderTemplate(HttpExchange exchange, String templateFile, Object dataModel) {

@@ -14,44 +14,38 @@
     <div class="table flex flex-col">
         <div class="header flex">
             <div class="column">
-                ##
+                id
             </div>
             <div class="column">
-                Имя
+                Name
             </div>
             <div class="column">
-                Фамилия
+                Author
             </div>
             <div class="column">
-                Отчество
+                status
             </div>
             <div class="column">
-                Подтверждение почты
-            </div>
-            <div class="column">
-                Четность строки
+                image link
             </div>
         </div>
 
-        <#list customers as customer>
-        <div class="row ${customer?item_parity} flex">
+        <#list books as book>
+        <div class="row ${book?item_parity} flex">
             <div class="column">
-                ${customer?counter}
+                ${book.id!"-- не указано --"}
             </div>
             <div class="column">
-                ${customer.firstName!"-- не указано --"}
+                ${book.name!"-- не указано --"}
             </div>
             <div class="column">
-                ${customer.lastName!"-- не указано --"}
+                ${book.author!"-- не указано --"}
             </div>
             <div class="column">
-                ${customer.middleName!"-- не указано --"}
+                ${book.status!"-- не указано --"}
             </div>
             <div class="column">
-                ${customer.emailConfirmed?string("подтверждён", "не подтверждён")}
-            </div>
-            <div class="column">
-                ${customer?item_parity}
+                ${book.img_link!"-- не указано --"}
             </div>
         </div>
     </#list>

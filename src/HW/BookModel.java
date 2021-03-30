@@ -7,102 +7,78 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookModel {
-    private User user = new User("Apache", "FreeMarker");
-    private LocalDateTime currentDateTime = LocalDateTime.now();
-    private List<User> customers = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
 
     public BookModel() {
-        customers.add(new User("Marco"));
-        customers.add(new User("Winston", "Duarte"));
-        customers.add(new User("Amos", "Burton", "'Timmy'"));
-        customers.get(1).setEmailConfirmed(true);
+        books.add(new Book(1,"Motivation", "Pushkin", true, ""));
+        books.add(new Book(2,"Motivation 2", "Pushkin", true, ""));
+        books.add(new Book(3,"Motivation 3", "Pushkin", true, ""));
     }
 
-    public User getUser() {
-        return user;
-    }
+    public static class Book {
+        private int id;
+        private String name;
+        private String author;
+        private boolean inLibrary;
+        private String imgLink;
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public LocalDateTime getCurrentDateTime() {
-        return currentDateTime;
-    }
-
-    public void setCurrentDateTime(LocalDateTime currentDateTime) {
-        this.currentDateTime = currentDateTime;
-    }
-
-    public List<User> getCustomers() {
-        return customers;
-    }
-
-    public void setCustomers(List<User> customers) {
-        this.customers = customers;
-    }
-
-    public static class User {
-        private String firstName;
-        private String lastName;
-        private String middleName = null;
-        private boolean emailConfirmed = false;
-        private String email;
-
-        public User(String firstName) {
-            this(firstName, null, null);
+        public Book(int id, String name, String author, boolean inLibrary, String imgLink) {
+            this.id = id;
+            this.name = name;
+            this.author = author;
+            this.inLibrary = inLibrary;
+            this.imgLink = imgLink;
         }
 
-        public User(String firstName, String lastName) {
-            this(firstName, lastName, null);
+        public int getId() {
+            return id;
         }
 
-        public User(String firstName, String lastName, String middleName) {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.middleName = middleName;
-            this.email = firstName+"@test.mail";
+        public void setId(int id) {
+            this.id = id;
         }
 
-        public String getFirstName() {
-            return firstName;
+        public String getName() {
+            return name;
         }
 
-        public void setFirstName(String firstName) {
-            this.firstName = firstName;
+        public void setName(String name) {
+            this.name = name;
         }
 
-        public String getLastName() {
-            return lastName;
+        public String getAuthor() {
+            return author;
         }
 
-        public void setLastName(String lastName) {
-            this.lastName = lastName;
+        public void setAuthor(String author) {
+            this.author = author;
         }
 
-        public String getMiddleName() {
-            return middleName;
+        public boolean isInLibrary() {
+            return inLibrary;
         }
 
-        public void setMiddleName(String middleName) {
-            this.middleName = middleName;
+        public void setInLibrary(boolean inLibrary) {
+            this.inLibrary = inLibrary;
         }
 
-        public boolean isEmailConfirmed() {
-            return emailConfirmed;
+        public String getImgLink() {
+            return imgLink;
         }
 
-        public void setEmailConfirmed(boolean emailConfirmed) {
-            this.emailConfirmed = emailConfirmed;
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
+        public void setImgLink(String imgLink) {
+            this.imgLink = imgLink;
         }
     }
+
+
 }
 
