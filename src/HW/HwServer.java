@@ -17,7 +17,8 @@ public class HwServer extends Server {
 
     public HwServer(String host, int port) throws IOException {
         super(host, port);
-        registerGet("/sample", this::freemarkerSampleHandler);
+        registerGet("/users", exchange -> freemarkerSampleHandler(exchange,"users.html"));
+        registerGet("/books", exchange -> freemarkerSampleHandler(exchange,"books.html"));
     }
 
     private static Configuration initFreeMarker() {
@@ -41,8 +42,8 @@ public class HwServer extends Server {
         }
     }
 
-    private void freemarkerSampleHandler(HttpExchange exchange) {
-        renderTemplate(exchange, "sample.html", getUserModel());
+    private void freemarkerSampleHandler(HttpExchange exchange, String path) {
+        renderTemplate(exchange, path, getUserModel());
     }
 
     protected void renderTemplate(HttpExchange exchange, String templateFile, Object dataModel) {
