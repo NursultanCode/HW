@@ -15,6 +15,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,13 +35,20 @@ public class HwServer extends Server {
         String cType = getContentType(exchange);
         String raw = getBody(exchange);
         Map<String,String> parsed = Utils.parseUrlEncoded(raw,"&");
-        String fmt = "<p> text:<b>%s</b></p>"
-                +"<p> content type:<b>%s</b></p>"
-                +"<p> after:<b>%s</b></p>";
-        String data = String.format(fmt, raw,cType,parsed);
+        System.out.println(parsed.toString());
+        String password = parsed.toString().substring(parsed.toString().indexOf('=')+1,parsed.toString().indexOf(','));
+        String email = parsed.toString().substring(parsed.toString().indexOf(',')+8,parsed.toString().length()-1);
         try {
-            sendByteData(exchange,ResponseCodes.OK, ContentType.TEXT_PLAIN, data.getBytes());
-        } catch (IOException e) {
+            UserModel.User user = UserModel.checkForContain(email,SqlGetter.userModelReader());
+
+            Path path;
+            if (user!=null && user.getPassword().equals(password)){
+                path = makeFilePath("profile.html");
+            }else {
+                path = makeFilePath("userNotFound.html");
+            }
+            sendFile(exchange, path, ContentType.TEXT_HTML);
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
 

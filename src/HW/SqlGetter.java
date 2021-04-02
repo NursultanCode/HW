@@ -22,7 +22,7 @@ public class SqlGetter {
                 while (result.next()){
                     int id = result.getInt("id");
                     String name = result.getString("name");
-                    String username = result.getString("username");
+                    String username = result.getString("email");
                     String password = result.getString("password");
 
                     UserModel.User user = new UserModel.User(id,name,username,password);

@@ -2,7 +2,6 @@ package HW;
 
 
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +16,13 @@ public class UserModel {
             throwables.printStackTrace();
         }
     }
+    public static User checkForContain(String email, List<User> users) throws SQLException, ClassNotFoundException {
+        for (User user: users
+             ) {
+            if (user.email.equals(email)) return user;
+        }
+        return null;
+    }
 
     public List<User> getCustomers() {
         return customers;
@@ -29,13 +35,13 @@ public class UserModel {
     public static class User {
         private int id;
         private String name;
-        private String username;
+        private String email;
         private String password;
 
         public User(int id, String name, String username, String password) {
             this.id = id;
             this.name = name;
-            this.username = username;
+            this.email = username;
             this.password = password;
         }
 
@@ -55,12 +61,12 @@ public class UserModel {
             this.name = name;
         }
 
-        public String getUsername() {
-            return username;
+        public String getEmail() {
+            return email;
         }
 
-        public void setUsername(String username) {
-            this.username = username;
+        public void setEmail(String email) {
+            this.email = email;
         }
 
         public String getPassword() {
@@ -70,6 +76,7 @@ public class UserModel {
         public void setPassword(String password) {
             this.password = password;
         }
+
     }
 }
 
