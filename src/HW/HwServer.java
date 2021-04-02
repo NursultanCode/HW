@@ -6,11 +6,18 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import jdk.jshell.execution.Util;
 import server.ContentType;
 import server.ResponseCodes;
 import server.Server;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class HwServer extends Server {
     private final static Configuration freemarker = initFreeMarker();
@@ -19,6 +26,47 @@ public class HwServer extends Server {
         super(host, port);
         registerGet("/users", exchange -> freemarkerSampleHandler(exchange,"users.html"));
         registerGet("/books", exchange -> freemarkerSampleHandler(exchange,"books.html"));
+        registerGet("/login",this::loginGet);
+        registerPost("/login",this::loginPost);
+    }
+
+    private void loginPost(HttpExchange exchange) {
+        String cType = getContentType(exchange);
+        String raw = getBody(exchange);
+        Map<String,String> parsed = Utils.parseUrlEncoded(raw,"&");
+        String fmt = "<p> text:<b>%s</b></p>"
+                +"<p> content type:<b>%s</b></p>"
+                +"<p> after:<b>%s</b></p>";
+        String data = String.format(fmt, raw,cType,parsed);
+        try {
+            sendByteData(exchange,ResponseCodes.OK, ContentType.TEXT_PLAIN, data.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private String getBody(HttpExchange exchange) {
+        InputStream input = exchange.getRequestBody();
+        Charset utf8 = StandardCharsets.UTF_8;
+        InputStreamReader isr = new InputStreamReader(input,utf8);
+        try(BufferedReader reader = new BufferedReader(isr)){
+            return reader.lines().collect(Collectors.joining(""));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private String getContentType(HttpExchange exchange) {
+        return exchange.getRequestHeaders().getOrDefault("Content-Type", List.of("")).get(0);
+    }
+
+
+    private void loginGet(HttpExchange exchange) {
+        Path path = makeFilePath("index.html");
+        sendFile(exchange, path, ContentType.TEXT_HTML);
     }
 
     private static Configuration initFreeMarker() {

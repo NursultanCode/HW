@@ -2,6 +2,7 @@ package HW;
 
 
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +19,11 @@ public class BookModel {
     }
 
     public BookModel() {
-        books.add(new Book(1,"Motivation", "Pushkin", true, ""));
-        books.add(new Book(2,"Motivation 2", "Pushkin", true, ""));
-        books.add(new Book(3,"Motivation 3", "Pushkin", true, ""));
+        try {
+            books = SqlGetter.bookModelReader();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static class Book {

@@ -42,10 +42,10 @@
                 ${book.author!"-- не указано --"}
             </div>
             <div class="column">
-                ${book.status!"-- не указано --"}
+                ${book.inLibrary?string('In library', 'user took')}
             </div>
             <div class="column">
-                ${book.img_link!"-- не указано --"}
+                ${book.linkImg!"-- не указано --"}
             </div>
         </div>
     </#list>
